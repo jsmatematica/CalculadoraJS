@@ -1,0 +1,196 @@
+<html>
+<head>
+<link rel="stylesheet" href="./estilos.css">
+<script src="math.js"></script>
+</head>
+<body>
+<div class="calc">
+<div class="screen">
+<label id="entrada" value="">&nbsp</label><br>
+<label id="salida" value="">&nbsp</label>
+</div>
+<div class="fila"><button class="func" id="shift">SHIFT</button><a href="baskara.html"><button id="f1" class="func">F1</button></a><a href="plot.html"><button id="" class="func">F2</button></a><button id="" class="func">F3</button></div>
+<div class="fila"><button class="botones" id="raiz">&#8730</button><button id="nCr" class="botones">nCr</button><button id="coma" class="botones">,</button><button id="nPr" class="botones">nPr</button></div>
+
+<div class="fila"><button id="sin" class="botones">sin</button><button id="cos" class="botones">cos</button><button id="tan" class="botones">tan</button><button id="c" class="botones">C</button><br></div>
+<div class="fila"><button class="botones" id="1">1</button><button id="2" class="botones">2</button><button id="3"class="botones">3</button><button id="mas" class="botones">+</button><br></div>
+<div class="fila"><button id="4" class="botones">4</button><button id="5" class="botones">5</button><button id="6" class="botones">6</button><button id="menos" class="botones">-</button><br></div>
+<div class="fila"><button id="7" class="botones">7</button><button id="8" class="botones">8</button><button id="9" class="botones">9</button><button id="por" class="botones">x</button><br></div>
+<div class="fila"><button id="0" class="botones">0</button><button id="." class="botones">.</button><button id="pow" class="botones">^</button><button id="div" class="botones">&#247</button><br></div>
+
+
+
+<div class="fila"><button id="oParent" class="botones">(</button><button id="cParent" class="botones">)</button><button id="borrar" class="botones">AC</button><button id="res" class="botones">=</button>
+</div>
+<br>
+<div class='fila'>
+<p class='cred'>by JulioProfeUY</p>
+</div>
+</div>
+
+<script>
+
+
+var valor = " ";
+var valorReal =" ";
+let valores = [''];
+let valoresReales=[''];
+
+// Obtener referencia a botones
+// Recuerda: el punto . indica clases
+const botones = document.querySelectorAll(".botones");
+
+// Definir función y evitar definirla de manera anónima
+
+var func = 0;
+document.getElementById('shift').onclick = function() {
+
+if (func === 0){
+
+document.getElementById('sin').innerText = 'asin';
+document.getElementById('cos').innerText = 'acos';
+document.getElementById('tan').innerText = 'atan';
+document.getElementById('coma').innerText = 'log';
+func = 1;
+}else{
+
+document.getElementById('sin').innerText = 'sin';
+document.getElementById('cos').innerText = 'cos';
+document.getElementById('tan').innerText = 'tan';
+document.getElementById('coma').innerText = ',';
+func=0;
+
+}
+}
+const cuandoSeHaceClick = function (evento) {
+	// Recuerda, this es el elemento
+
+
+if (this.id === 'res'){
+
+document.getElementById('salida').textContent= math.format(math.evaluate(valorReal),10);
+
+}
+else if (this.id === 'por'){
+
+valores.push(valor);
+valoresReales.push(valorReal);
+valorReal = valorReal + '*';
+valor = valor + this.innerText;
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+document.getElementById('entrada').textContent=valor;
+
+}
+else if (this.id === 'borrar'){
+
+document.getElementById('entrada').innerHTML ='&nbsp';
+document.getElementById('salida').innerHTML ='&nbsp';
+valor = '';
+valorReal = '';
+valores = [''];
+valoresReales = [''];
+
+
+}
+else if(this.id === 'raiz'){
+valores.push(valor);
+valoresReales.push(valorReal);
+valorReal = valorReal + 'sqrt(';
+valor = valor + this.innerText +'(';
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+
+	document.getElementById('entrada').textContent=valor;
+}else if((this.id === 'sin')|(this.id === 'cos')|(this.id === 'tan')){
+valores.push(valor);
+valoresReales.push(valorReal);
+if((this.innerText === 'sin')|(this.innerText === 'cos')|(this.innerText === 'tan')){
+valorReal = valorReal + this.innerText +'((pi/180)*';
+valor = valor + this.innerText +'(';
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+}else{
+valorReal = valorReal +  '(180/pi)' +this.innerText +'(';
+valor = valor + this.innerText +'(';
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+}
+document.getElementById('entrada').textContent=valor;
+}
+else if(this.id === 'nCr')
+{
+valores.push(valor);
+valoresReales.push(valorReal);
+	valor = valor + this.innerText +'(';
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+	valorReal = valorReal + 'combinations(';
+
+	document.getElementById('entrada').textContent=valor;
+}
+else if(this.id === 'nPr')
+{
+valores.push(valor);
+valoresReales.push(valorReal);
+	valor = valor + this.innerText +'(';
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+	valorReal = valorReal + 'permutations(';
+
+	document.getElementById('entrada').textContent=valor;
+}
+else if(this.id === 'div'){
+valores.push(valor);
+valoresReales.push(valorReal);
+valorReal = valorReal + '/';
+valor = valor + this.innerText;
+
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+	document.getElementById('entrada').textContent=valor;
+}
+else if(this.id ==='c')
+{
+valor = valores.pop();
+valorReal = valoresReales.pop();
+document.getElementById('entrada').textContent=valor;
+}
+else
+{
+valores.push(valor);
+valoresReales.push(valorReal);
+	valor = valor + this.innerText;
+if(valor.length === 24)
+{
+valor= valor + '\n';
+}
+	valorReal = valorReal + this.innerText;
+
+	document.getElementById('entrada').textContent=valor;
+}
+
+}
+// botones es un arreglo así que lo recorremos
+botones.forEach(boton => {
+	//Agregar listener
+	boton.addEventListener("click", cuandoSeHaceClick);
+});
+</script>
+
+</body>
+<html>
